@@ -6,3 +6,4 @@ just for testing
 - HTML
 - CSS
 - JavaScript
+- Vue.js
