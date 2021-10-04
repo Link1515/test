@@ -8,3 +8,4 @@ just for testing
 - JavaScript
 - Vue.JS
 - Hello
+- Vue.js (以後會教)
