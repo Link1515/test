@@ -1,0 +1,79 @@
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #335;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  color: #335;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+.info {
+  background: DarkGray;
+  -webkit-box-shadow: 0 0 1px rgba(169, 169, 169, 0.25);
+  box-shadow: 0 0 1px rgba(169, 169, 169, 0.25);
+  color: #fff;
+}
+
+.alert {
+  background: DarkRed;
+  -webkit-box-shadow: 0 0 1px rgba(139, 0, 0, 0.25);
+  box-shadow: 0 0 1px rgba(139, 0, 0, 0.25);
+  color: #fff;
+}
+
+.success {
+  background: DarkGreen;
+  -webkit-box-shadow: 0 0 1px rgba(0, 100, 0, 0.25);
+  box-shadow: 0 0 1px rgba(0, 100, 0, 0.25);
+  color: #fff;
+}
+
+/*------------*/
+.message,
+.success,
+.error,
+.warning {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+.warning {
+  border-color: yellow;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+article[role='main'] {
+  width: 62.5%;
+}
+/*# sourceMappingURL=learnScss.css.map */
