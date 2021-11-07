@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #result {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">點擊發送請求</button>
+    <div id="result"></div>
+
+    <script>
+      const btn = document.getElementById('btn');
+      const result = document.getElementById('result');
+
+      btn.onclick = () => {
+        // 1. 建立對象
+        const xhr = new XMLHttpRequest();
+        // 2. 初始化
+        xhr.open('GET', 'http://127.0.0.1:8000/server');
+        // 3. 發送
+        xhr.send();
+        // 4. 事件綁定
+        // readystate 有 0 1 2 3 4 四種狀態
+        xhr.onreadystatechange = () => {
+          // 判斷伺服器已經返回了所有結果
+          if (xhr.readyState === 4) {
+            // 判斷響應狀態碼
+            if (xhr.status >= 200 && xhr.status < 300) {
+              // 處理結果 行 頭 空行 結果
+              console.log(xhr.status); // 狀態碼
+              console.log(xhr.statusText); // 狀態字串
+              console.log(xhr.getAllResponseHeaders());
+              console.log(xhr.response);
+
+              result.innerHTML = xhr.response;
+            }
+          }
+        };
+      };
+    </script>
+  </body>
+</html>
