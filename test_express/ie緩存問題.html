@@ -14,30 +14,22 @@
     </style>
   </head>
   <body>
+    <button id="btn">點擊發送請求</button>
     <div id="result"></div>
 
     <script>
-      const result = document.getElementById('result');
+      const btn = document.querySelector('#btn');
+      const result = document.querySelector('#result');
 
-      result.addEventListener('mouseover', () => {
-        // 1. 創建對象
+      btn.addEventListener('click', () => {
         const xhr = new XMLHttpRequest();
-        // 2. 初始化，設置類型與URL
-        xhr.open('POST', 'http://127.0.0.1:8000/server');
-        // 設置請求頭
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        // 自訂請求頭
-        // 伺服器端要有設定Access-Control-Allow-Headers: *
-        // 伺服器還要可以接收 OPTION 方法
-        xhr.setRequestHeader('name', 'HiLink');
-        // 3. 發送
-        xhr.send('a=100&b=200&c=300');
-        // xhr.send('a:100&b:200&c:300');
-        // 4. 事件判斷
+        // 加上時間戳來解決ie緩存問題
+        xhr.open('GET', 'http://127.0.0.1:8000/ie?t=' + Date.now());
+        xhr.send();
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
             if (xhr.status >= 200 && xhr.status < 300) {
-              // 處理服務端返回的結果
+              console.log(xhr.response);
               result.innerHTML = xhr.response;
             }
           }

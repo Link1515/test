@@ -19,30 +19,26 @@
     <script>
       const result = document.getElementById('result');
 
-      result.addEventListener('mouseover', () => {
-        // 1. 創建對象
+      window.onkeydown = () => {
         const xhr = new XMLHttpRequest();
-        // 2. 初始化，設置類型與URL
-        xhr.open('POST', 'http://127.0.0.1:8000/server');
-        // 設置請求頭
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        // 自訂請求頭
-        // 伺服器端要有設定Access-Control-Allow-Headers: *
-        // 伺服器還要可以接收 OPTION 方法
-        xhr.setRequestHeader('name', 'HiLink');
-        // 3. 發送
-        xhr.send('a=100&b=200&c=300');
-        // xhr.send('a:100&b:200&c:300');
-        // 4. 事件判斷
+        // response 會自動轉換成物件
+        xhr.responseType = 'json';
+        xhr.open('GET', 'http://127.0.0.1:8000/json-server');
+        xhr.send();
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
             if (xhr.status >= 200 && xhr.status < 300) {
-              // 處理服務端返回的結果
-              result.innerHTML = xhr.response;
+              console.log(xhr.response);
+              // 手動轉換格式(沒有xhr.responseType)
+              // let data = JSON.parse(xhr.response);
+              // result.innerHTML = data.name;
+
+              // 自動轉換
+              result.innerHTML = xhr.response.name;
             }
           }
         };
-      });
+      };
     </script>
   </body>
 </html>
