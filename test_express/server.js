@@ -41,6 +41,16 @@ app.get('/ie', (request, response) => {
   response.send('hello IE');
 });
 
+// 延遲響應
+app.get('/delay', (request, response) => {
+  // 設置回應頭 設置允許跨域
+  response.set('Access-Control-Allow-Origin', '*');
+
+  setTimeout(() => {
+    response.send('延遲響應');
+  }, 3000);
+});
+
 // 4. 監聽端口啟動服務
 app.listen(8000, () => {
   console.log('服務已經啟動, 8000端口監聽中...');
