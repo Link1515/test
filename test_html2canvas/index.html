@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+      integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #capture {
+        overflow: hidden;
+        width: 2500px;
+        height: 843px;
+        background-color: rgb(0, 184, 122);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+      }
+
+      .section {
+        background-color: #0fa;
+        font-family: '微軟正黑體', 'serif';
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .section i {
+        font-size: 30rem;
+        margin-bottom: 2rem;
+      }
+
+      .section p {
+        font-size: 5rem;
+        color: #000;
+      }
+
+      .section1 {
+        color: #fff;
+      }
+
+      .section2 {
+        color: #f00;
+      }
+
+      .section3 {
+        color: rgb(32, 32, 204);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>html to canva</h2>
+
+    <div id="capture">
+      <div class="section section1">
+        <i class="fas fa-cloud"></i>
+        <p>確認天氣</p>
+      </div>
+      <div class="section section2">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>找球場</p>
+      </div>
+      <div class="section section3">
+        <i class="far fa-question-circle"></i>
+        <p>說明</p>
+      </div>
+    </div>
+
+    <button id="transferBtn">Transfer !</button>
+
+    <h2>result</h2>
+
+    <div id="result" style="max-width: 600px"></div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./html2canvas.min.js"></script>
+    <script>
+      const capture = document.querySelector('#capture')
+      const transferBtn = document.querySelector('#transferBtn')
+      const result = document.querySelector('#result')
+
+      transferBtn.onclick = () => {
+        html2canvas(capture, {
+          scale: 1
+        }).then((canvas) => {
+          result.appendChild(canvas)
+        })
+      }
+    </script>
+  </body>
+</html>
