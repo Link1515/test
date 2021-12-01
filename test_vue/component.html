@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>一共點了 {{ totalClick }} 次按鈕</h2>
+      <btn v-for="item in 3" @clicked="count" :num="item"></btn>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script type="text/x-template" id="btn">
+      <button @click="clickEvn">按鈕 {{ num }}</button>
+    </script>
+
+    <script>
+      Vue.component('btn', {
+        template: '#btn',
+        props: {
+          num: {
+            type: Number
+          }
+        },
+        methods: {
+          clickEvn() {
+            this.$emit('clicked')
+          }
+        }
+      })
+
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            totalClick: 0
+          }
+        },
+        methods: {
+          count() {
+            this.totalClick++
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <com1></com1>
+      <com2></com2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script type="text/x-template" id="com1">
+      <button @click="sendMessage">傳送訊息</button>
+    </script>
+
+    <script type="text/x-template" id="com2">
+      <p>收信夾: {{ msg }}</p>
+    </script>
+
+    <script>
+      const eventBus = new Vue()
+
+      Vue.component('com1', {
+        template: '#com1',
+        methods: {
+          sendMessage() {
+            eventBus.$emit('sendMsg', "Hello! I'm from com1")
+          }
+        }
+      })
+
+      Vue.component('com2', {
+        template: '#com2',
+        data() {
+          return {
+            msg: ''
+          }
+        },
+        mounted() {
+          eventBus.$on('sendMsg', (value) => {
+            this.msg = value
+          })
+        }
+      })
+
+      new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>

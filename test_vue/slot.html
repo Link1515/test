@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <btn>aaa</btn>
+
+      <hnp>
+        <template v-slot:title>我修改標題</template>
+        <template #txt>
+          我修改內文
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nobis sint nihil laudantium alias sit aut
+            veritatis aliquam minima corrupti minus, adipisci voluptas! Iste qui dolores nostrum animi natus
+            perspiciatis.
+          </p>
+        </template>
+      </hnp>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script type="text/x-template" id="btn">
+      <button>
+        <slot>送出</slot>
+      </button>
+    </script>
+
+    <script type="text/x-template" id="hnp">
+      <div>
+        <h1>
+          <slot name="title">標題</slot>
+        </h1>
+        <p>
+          <slot name="txt">內文</slot>
+        </p>
+      </div>
+    </script>
+
+    <script>
+      Vue.component('btn', {
+        template: '#btn'
+      })
+
+      Vue.component('hnp', {
+        template: '#hnp'
+      })
+
+      new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>

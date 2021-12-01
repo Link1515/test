@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <text-size-sync :size.sync="textSize2"></text-size-sync>
+      <text-size-sync :size.sync="textSize2"></text-size-sync>
+
+      <hr />
+
+      <h2>一共按了 {{ totalClick }} 下</h2>
+      <btn :total.sync="totalClick"></btn>
+      <btn :total.sync="totalClick"></btn>
+      <btn :total.sync="totalClick"></btn>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script type="text/x-template" id="text-size-sync">
+      <div>
+        <p :style="{ fontSize: size + 'px'}">ABCDEFG</p>
+        <input type="button" value="+" @click="syncSize += 2">
+        <input type="button" value="-" @click="syncSize -= 2">
+      </div>
+    </script>
+
+    <script type="text/x-template" id="btn">
+      <button @click="usableTotal++">按鈕 {{ num }}</button>
+    </script>
+
+    <script>
+      Vue.component('text-size-sync', {
+        template: '#text-size-sync',
+        props: {
+          size: {
+            type: Number,
+            default: 16
+          }
+        },
+        computed: {
+          syncSize: {
+            // 語法糖
+            // 產生 computed 值的 function
+            get() {
+              return this.size
+            },
+            // 當修改 computed 值時執行的 function
+            set(value) {
+              // 如果傳入的資料有 .sync，觸發的事件名稱固定是 update:props名
+              this.$emit('update:size', value)
+            }
+          }
+        }
+      })
+
+      Vue.component('btn', {
+        template: '#btn',
+        props: {
+          num: {
+            type: Number
+          },
+          total: {
+            type: Number
+          }
+        },
+        computed: {
+          usableTotal: {
+            get() {
+              return this.total
+            },
+            set(value) {
+              this.$emit('update:total', value)
+            }
+          }
+        }
+      })
+
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            textSize2: 20,
+            totalClick: 0
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
