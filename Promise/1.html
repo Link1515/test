@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">點擊抽獎</button>
+
+    <script>
+      const btn = document.getElementById('btn');
+
+      btn.addEventListener('click', function () {
+        // setTimeout(() => {
+        //   let n = rand(1, 100);
+        //   if (n <= 30) {
+        //     alert('中獎!');
+        //   } else {
+        //     alert('沒中...');
+        //   }
+        // }, 1000);
+
+        // ------
+        // 用 Promise 實現
+        // resolve 解決 函數類型
+        // reject 拒絕 函數類型
+        const p = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            let n = rand(1, 100);
+            if (n <= 30) {
+              resolve(n); // 將promise的狀態設為成功
+            } else {
+              reject(n); // 將promise的狀態設為失敗
+            }
+          }, 1000);
+        });
+
+        p.then(
+          (value) => {
+            alert('中獎! 號碼為' + value);
+          },
+          (reason) => {
+            alert('沒中... 號碼為' + reason);
+          }
+        );
+      });
+
+      function rand(m, n) {
+        return Math.ceil(Math.random() * (n - m + 1)) + m - 1;
+      }
+    </script>
+  </body>
+</html>
