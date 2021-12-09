@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 2</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>1 日幣 = 0.278 台幣</p>
+      <div>台幣 <input type="text" v-model="twd" @input="twd2jpy" /></div>
+      <div>日幣 <input type="text" v-model="jpy" @input="jpy2twd" /></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data() {
+          return {
+            twd: 0.278,
+            jpy: 1
+          };
+        },
+        methods: {
+          twd2jpy() {
+            this.jpy = Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+          },
+          jpy2twd() {
+            this.twd = Number.parseFloat(Number(this.jpy) * 0.278).toFixed(3);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
