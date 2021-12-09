@@ -1,22 +1,21 @@
-const fs = require('fs');
+"use strict";
 
-// 回調函數的形式
+var fs = require('fs'); // 回調函數的形式
 // fs.readFile('./tt.txt', (err, data) => {
 //   // 如果錯誤，就拋出錯誤
 //   if (err) throw err;
 //   console.log(data.toString());
 // });
 
-let p = new Promise((resolve, reject) => {
-  fs.readFile('./tt.txt', (err, data) => {
+
+var p = new Promise(function (resolve, reject) {
+  fs.readFile('./tt.txt', function (err, data) {
     // 如果出錯
-    if (err) reject(err);
-    // 如果成功
+    if (err) reject(err); // 如果成功
+
     resolve(data);
   });
-});
-
-// 調用 then
+}); // 調用 then
 // p.the
 //   (value) => {
 //     console.log(value.toString());
