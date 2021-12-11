@@ -2,7 +2,8 @@ function Promise(executor) {
   // 添加屬性
   this.PromiseState = 'pending';
   this.PromiseResult = null;
-  this.callback = {};
+  // 用陣列處理多個回調
+  this.callbacks = [];
 
   // 保存實例的 this 值
   const self = this;
@@ -16,9 +17,11 @@ function Promise(executor) {
     // 2. 設置物件結果值 (PromiseResult)
     self.PromiseResult = data;
     // 異步時，調用成功的then回調函數
-    if (self.callback.onResolve) {
-      self.callback.onResolve(data);
-    }
+    setTimeout(() => {
+      self.callbacks.forEach((item) => {
+        item.onResolve(data);
+      });
+    });
   }
 
   // reject 函數
@@ -30,9 +33,11 @@ function Promise(executor) {
     // 2. 設置物件結果值 (PromiseResult)
     self.PromiseResult = data;
     // 異步時，調用失敗的then回調函數
-    if (self.callback.onReject) {
-      self.callback.onReject(data);
-    }
+    setTimeout(() => {
+      self.callbacks.forEach((item) => {
+        item.onReject(data);
+      });
+    });
   }
 
   // 處理拋出錯誤
@@ -45,17 +50,123 @@ function Promise(executor) {
 }
 
 Promise.prototype.then = function (onResolve, onReject) {
-  if (this.PromiseState === 'fulfilled') {
-    onResolve(this.PromiseResult);
-  }
-  if (this.PromiseState === 'rejected') {
-    onReject(this.PromiseResult);
-  }
-  // 判斷 pending 狀態
-  if (this.PromiseState === 'pending') {
-    this.callback = {
-      onResolve,
-      onReject
+  const self = this;
+  // 判斷回調函數參數
+  if (typeof onReject !== 'function') {
+    onReject = (reason) => {
+      throw reason;
     };
   }
+  if (typeof onResolve !== 'function') {
+    onResolve = (value) => value;
+  }
+  return new Promise((resolve, reject) => {
+    function callback(type) {
+      try {
+        let result = type(self.PromiseResult);
+        if (result instanceof Promise) {
+          result.then(
+            (v) => {
+              resolve(v);
+            },
+            (r) => {
+              reject(r);
+            }
+          );
+        } else {
+          resolve(result);
+        }
+      } catch (err) {
+        reject(err);
+      }
+    }
+    // 同步時，成功調用
+    if (this.PromiseState === 'fulfilled') {
+      setTimeout(() => {
+        callback(onResolve);
+      });
+    }
+    // 同步時，失敗調用
+    if (this.PromiseState === 'rejected') {
+      setTimeout(() => {
+        callback(onReject);
+      });
+    }
+    // 判斷 pending 狀態
+    // Promise 異步時，存取回調
+    if (this.PromiseState === 'pending') {
+      this.callbacks.push({
+        onResolve: function () {
+          callback(onResolve);
+        },
+        onReject: function () {
+          callback(onReject);
+        }
+      });
+    }
+  });
+};
+
+Promise.prototype.catch = function (onReject) {
+  return this.then(undefined, onReject);
+};
+
+Promise.resolve = function (value) {
+  return new Promise((resolve, reject) => {
+    if (value instanceof Promise) {
+      value.then(
+        (v) => {
+          resolve(v);
+        },
+        (r) => {
+          reject(r);
+        }
+      );
+    } else {
+      resolve(value);
+    }
+  });
+};
+
+Promise.reject = function (reason) {
+  return new Promise((resolve, reject) => {
+    reject(reason);
+  });
+};
+
+Promise.all = function (promises) {
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    let arr = [];
+    for (let i = 0; i < promises.length; i++) {
+      promises[i].then(
+        (v) => {
+          count++;
+          arr[i] = v;
+          if (count === promises.length) {
+            resolve(arr);
+          }
+        },
+        (r) => {
+          reject(r);
+        }
+      );
+    }
+  });
+};
+
+Promise.race = function (promises) {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      // 那個 Promise 先改變狀態，就決定結果
+      promises[i].then(
+        (v) => {
+          resolve(v);
+        },
+        (r) => {
+          reject(r);
+        }
+      );
+    }
+  });
 };

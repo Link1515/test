@@ -7,22 +7,23 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="./promise.js"></script>
+    <!-- <script src="./promise.js"></script> -->
+    <script src="./promise_class.js"></script>
     <script>
       let p = new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve('OK');
+          resolve('ok');
         }, 1000);
       });
 
-      p.then(
-        (value) => {
-          console.log(value);
-        },
-        (reason) => {
-          console.log(reason);
-        }
-      );
+      // p.then(
+      //   (value) => {
+      //     console.log(value);
+      //   },
+      //   (reason) => {
+      //     console.log(reason);
+      //   }
+      // );
     </script>
   </body>
 </html>
