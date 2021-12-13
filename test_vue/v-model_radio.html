@@ -8,14 +8,14 @@
   </head>
   <body>
     <div id="app">
-      <input type="checkbox" id="jack" value="Jack" v-model="checkedName">
-      <label for="jack">Jack</label>
-      <input type="checkbox" id="john" value="John" v-model="checkedName">
-      <label for="john">John</label>
-      <input type="checkbox" id="mike" value="Mike" v-model="checkedName">
-      <label for="mike">Mike</label>
-      <input type="checkbox" id="mary" value="Mary" v-model="checkedName">
-      <label for="mary">Mary</label>
+      <div>
+        <input type="radio" value="蘋果" id="one" v-model="picked">
+        <label for="one">蘋果</label>
+      </div>
+      <div>
+        <input type="radio" value="鳳梨" id="two" v-model="picked">
+        <label for="two">鳳梨</label>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -23,7 +23,7 @@
       const vm = new Vue({
         data() {
           return {
-            checkedName: []
+            picked: ''
           }
         }
       }).$mount('#app');
