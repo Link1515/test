@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 2</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Todo list</h1>
+      <ul>
+        <li v-for="i in todoLists">
+          <label><input type="checkbox" v-model="i.isDone" />{{ i.title }}</label>
+        </li>
+      </ul>
+
+      <h1>done list</h1>
+      <ul>
+        <li v-for="i in doneLists">
+          <label><input type="checkbox" v-model="i.isDone" />{{ i.title }}</label>
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        data() {
+          return {
+            lists: [
+              {
+                id: 'task01',
+                title: '選項 1',
+                isDone: false
+              },
+              {
+                id: 'task02',
+                title: '選項 2',
+                isDone: false
+              },
+              {
+                id: 'task03',
+                title: '選項 3',
+                isDone: false
+              }
+            ]
+          };
+        },
+        computed: {
+          todoLists() {
+            return this.lists.filter((d) => !d.isDone);
+          },
+          doneLists() {
+            return this.lists.filter((d) => d.isDone);
+          }
+        }
+      }).$mount('#app');
+    </script>
+  </body>
+</html>

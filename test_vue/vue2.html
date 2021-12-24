@@ -8,17 +8,27 @@
   </head>
   <body>
     <div id="app">
-      <div @click="console('div')">
-        <button @click.stop="console('button')">點我</button>
+      <div class="message">
+        <div v-for="m in message">{{ m }}</div>
+        {{ message }}
       </div>
+
+      <input type="text" placeholder="輸入任何文字後按 enter" v-model.trim="msg" @keydown.enter="addToMessage" />
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script>
       const vm = new Vue({
+        data() {
+          return {
+            msg: '',
+            message: ['訊息1', '訊息2', '訊息3']
+          };
+        },
         methods: {
-          console(item) {
-            console.log('im ' + item);
+          addToMessage() {
+            this.message.push(this.msg);
+            this.msg = '';
           }
         }
       }).$mount('#app');
