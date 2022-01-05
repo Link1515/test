@@ -8,12 +8,9 @@
   </head>
   <body>
     <div id="app">
-      <div class="message">
-        <div v-for="m in message">{{ m }}</div>
-        {{ message }}
-      </div>
-
-      <input type="text" placeholder="輸入任何文字後按 enter" v-model.trim="msg" @keydown.enter="addToMessage" />
+      <h2>{{ test }}</h2>
+      <button @click="test[2].tt++">test[2].tt++</button>
+      <button @click="test.push(666)">push</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -21,14 +18,21 @@
       const vm = new Vue({
         data() {
           return {
-            msg: '',
-            message: ['訊息1', '訊息2', '訊息3']
+            test: [
+              123,
+              456,
+              {
+                tt: 777
+              }
+            ]
           };
         },
-        methods: {
-          addToMessage() {
-            this.message.push(this.msg);
-            this.msg = '';
+        watch: {
+          test: {
+            deep: true,
+            handler() {
+              console.log('test is changed !');
+            }
           }
         }
       }).$mount('#app');
