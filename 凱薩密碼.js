@@ -1,4 +1,6 @@
 // 新版
+//#region
+
 
 const offset = parseInt(prompt('密鑰: '));
 const lightWord = prompt('明文: ');
@@ -16,3 +18,6 @@ for (let i = 0; i < lightWord.length; i++) {
 }
 
 console.log(darkWord);
+//#endregion
+
+123
