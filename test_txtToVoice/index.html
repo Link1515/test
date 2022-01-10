@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="play()">文字轉語音</button>
+
+    <script>
+      // SpeechSynthesisUtterance.lang   獲取並設定話語的語言
+      // SpeechSynthesisUtterance.pitch  獲取並設定話語的音調(值越大越尖銳,越低越低沉)
+      // SpeechSynthesisUtterance.rate    獲取並設定說話的速度(值越大語速越快,越小語速越慢)
+      // SpeechSynthesisUtterance.text    獲取並設定說話時的文字
+      // SpeechSynthesisUtterance.voice  獲取並設定說話的聲音
+      // SpeechSynthesisUtterance.volume 獲取並設定說話的音量
+
+      // speak()      將對應的例項新增到語音佇列中
+      // cancel()     刪除佇列中所有的語音.如果正在播放,則直接停止
+      // pause()     暫停語音
+      // resume()   恢復暫停的語音
+      // getVoices()  獲取支援的語言陣列. 注意:必須新增在voiceschanged事件中才能生效
+
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = '你好';
+      msg.lang = 'zh';
+      msg.volume = 50;
+      msg.rate = 0.7;
+      msg.pitch = 1.5;
+
+      console.log(speechSynthesis.getVoices());
+
+      function play() {
+        speechSynthesis.speak(msg);
+      }
+    </script>
+  </body>
+</html>

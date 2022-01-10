@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let title = 'test title';
+      const book = {};
+
+      Object.defineProperty(book, 'title', {
+        set: (val) => {
+          title = val;
+          console.log('資料更新!', val);
+        },
+        get: () => {
+          return title;
+        }
+      });
+
+      book.title = '1222';
+      book.title = [123, 456, 789];
+
+      // 陣列內部元素更改不會觸發 setter function
+      // 要被重新賦值時才會觸發
+      book.title.push('1111');
+    </script>
+  </body>
+</html>
