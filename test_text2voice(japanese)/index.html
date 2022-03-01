@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="speakTxt">
+  <button id="speakBtn">說話</button>
+
+  <script>
+    function getVoices () {
+      return new Promise(
+        function (resolve, reject) {
+          const synth = window.speechSynthesis
+
+          const id = setInterval(() => {
+            if (synth.getVoices().length !== 0) {
+              resolve(synth.getVoices())
+              clearInterval(id)
+            }
+          }, 10)
+        }
+      )
+    }
+
+    const msg = new SpeechSynthesisUtterance()
+    getVoices().then((voices) => {
+      const VT = voices.filter(v => v.lang.includes('ja-JP'))[0]
+      msg.voice = VT
+    })
+
+
+    const speakBtn = document.querySelector('#speakBtn')
+    const speakTxt = document.querySelector('#speakTxt')
+
+    speakBtn.onclick = () => {
+      msg.text = speakTxt.value
+      speechSynthesis.speak(msg)
+    }
+  </script>
+</body>
+</html>
