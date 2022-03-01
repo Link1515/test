@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const stepList = [{
+        mode: '語音',
+        text: '天黑請閉眼'
+      },
+      {
+        mode: '語音',
+        text: '女巫請睜眼'
+      },
+      {
+        mode: '語音',
+        text: '互相確認彼此身分'
+      }
+    ]
+
+    // speechSynthesis.onvoiceschanged = function () {
+    //   const voices = speechSynthesis.getVoices();
+    //   const msg = new SpeechSynthesisUtterance();
+    //   const voiceType = voices.filter(v => v.name.includes('Google 國語'))[0]
+
+    //   msg.text = '你好'
+    //   msg.voice = voiceType
+    //   msg.onend = function () {
+    //     console.log('hi')
+    //   }
+
+    //   speechSynthesis.speak(msg);
+    // }
+
+    function getVoices() {
+      return new Promise(
+        function (resolve, reject) {
+          let synth = window.speechSynthesis;
+          let id;
+
+          id = setInterval(() => {
+            if (synth.getVoices().length !== 0) {
+              resolve(synth.getVoices());
+              clearInterval(id);
+            }
+          }, 10);
+        }
+      )
+    }
+
+    function step(msg, s) {
+      return new Promise((resolve, rejcet) => {
+        msg.onend = resolve
+        msg.text = s.text
+        speechSynthesis.speak(msg)
+      })
+    }
+
+    async function start() {
+      const voices = await getVoices()
+      const voiceType = voices.filter(v => v.name.includes('Google 國語'))[0]
+      const msg = new SpeechSynthesisUtterance();
+      msg.voice = voiceType
+
+      for (let i = 0; i < stepList.length; i++) {
+        await step(msg, stepList[i])
+      }
+      console.log('結束')
+    }
+
+    start()
+  </script>
+</body>
+
+</html>
