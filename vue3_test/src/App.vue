@@ -1,12 +1,32 @@
 <script setup>
-const name = 'Link';
-const age = 23;
+import { ref, reactive } from 'vue';
+
+const name = ref('Link');
+const age = ref(23);
+const obj = reactive({
+  data1: 123,
+  data2: 456
+});
+// Vue 3 可以監測陣列!
+const arr = reactive(['d1', 'd2', 'd3']);
+
+function change() {
+  name.value = 'Link2';
+  age.value = 24;
+  obj.data1 = 777;
+  arr[0] = 'dd';
+}
 </script>
 
 <template>
   <h1>測試</h1>
   <h2>{{ name }}</h2>
   <h2>{{ age }}</h2>
+  <hr />
+  <h2>{{ obj.data1 }}</h2>
+  <h2>{{ obj.data2 }}</h2>
+  <h2>{{ arr }}</h2>
+  <input type="button" value="console" @click="change" />
 </template>
 
 <style>
