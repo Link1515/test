@@ -1,5 +1,6 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, watchEffect, toRef } from 'vue';
+import testHook from './hooks/fn1';
 
 const name = ref('Link');
 const age = ref(23);
@@ -47,6 +48,16 @@ watch(
     deep: true
   }
 );
+
+watchEffect(() => {
+  const a = name.value;
+  console.log('hi');
+});
+
+const a = testHook();
+console.log(a);
+
+const tt = toRef(obj, 'data1');
 </script>
 
 <template>
@@ -57,6 +68,8 @@ watch(
   <h2>{{ obj.data1 }}</h2>
   <h2>{{ obj.data2 }}</h2>
   <h2>{{ arr }}</h2>
+  <hr />
+  <p>{{ tt }}</p>
   <input type="button" value="console" @click="change" />
 </template>
 
