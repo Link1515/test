@@ -1,7 +1,7 @@
 {
   "include": ["./*"],
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
     "module": "es6",
     "outDir": "./dist",
     "noEmitOnError": true
