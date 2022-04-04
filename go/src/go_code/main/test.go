@@ -7,4 +7,7 @@ func main() {
 	fmt.Println("hihi")
 	fmt.Println("hihi")
 	fmt.Println("hihi")
+
+	var num int = 123
+	fmt.Println("變數 num = ", num);
 }
