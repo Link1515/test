@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <!-- react 核心庫 -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- 支持 react 操作 DOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- 將 jsx 轉為 js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- 此處一定要寫 type="text/babel" -->
+    <script type="text/babel">
+      // 1. 創建類式組件
+      class Weather extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { isHot: false };
+          this.changeWeather = this.changeWeather.bind(this);
+        }
+        render() {
+          const { isHot } = this.state;
+          return <h2 onClick={this.changeWeather}>今天天氣真{isHot ? '炎熱' : '涼爽'}</h2>;
+        }
+        changeWeather() {
+          // changeWeather 在虛擬 DOM 作為 onClick 的回調，不是直接透過實例調用，再加上類會開啟嚴格模式，所以點擊標題時 this 會 console 出 undefined
+          const isHot = this.state.isHot;
+          this.setState({ isHot: !isHot });
+        }
+      }
+      // 2. 渲染組件到頁面
+      ReactDOM.render(<Weather />, document.getElementById('test'));
+    </script>
+  </body>
+</html>
