@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <!-- react 核心庫 -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- 支持 react 操作 DOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- 將 jsx 轉為 js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- 此處一定要寫 type="text/babel" -->
+    <script type="text/babel">
+      class Demo extends React.Component {
+        showData = () => {
+          const { input1 } = this;
+          alert(input1.value);
+        };
+
+        showData2 = () => {
+          const { input2 } = this;
+          alert(input2.value);
+        };
+
+        render() {
+          return (
+            <div>
+              <input
+                ref={(currentNode) => (this.input1 = currentNode)}
+                type="text"
+                placeholder="點右邊按鈕彈出輸入內容"
+              />
+              <button onClick={this.showData}>點我</button>
+              <br />
+              <br />
+              <input
+                ref={(currentNode) => (this.input2 = currentNode)}
+                onBlur={this.showData2}
+                type="text"
+                placeholder="失去焦點時彈出輸入內容"
+              />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById('test'));
+    </script>
+  </body>
+</html>
