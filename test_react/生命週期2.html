@@ -44,9 +44,19 @@
           this.setState({ num: ++num });
         };
 
-        componentWillMount() {
-          console.log('componentWillMount');
+        static getDerivedStateFromProps(props) {
+          console.log('getDerivedStateFromProps');
+          return props;
         }
+
+        getSnapshotBeforeUpdate() {
+          console.log('getSnapshotBeforeUpdate');
+          return 'test-snapshot';
+        }
+
+        // componentWillMount() {
+        //   console.log('componentWillMount');
+        // }
 
         componentDidMount() {
           console.log('componentDidMount');
@@ -63,12 +73,12 @@
           return true;
         }
 
-        componentWillUpdate() {
-          console.log('componentWillUpdate');
-        }
+        // componentWillUpdate() {
+        //   console.log('componentWillUpdate');
+        // }
 
-        componentDidUpdate() {
-          console.log('componentDidUpdate');
+        componentDidUpdate(preProps, preState, snapshotValue) {
+          console.log('componentDidUpdate', preProps, preState, snapshotValue);
         }
 
         render() {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="test"></div>
+
+    <!-- react 核心庫 -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- 支持 react 操作 DOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- react 的 prop-types -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <!-- 將 jsx 轉為 js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- 此處一定要寫 type="text/babel" -->
+    <script type="text/babel">
+      class Dad extends React.Component {
+        state = { dinner: '水餃' };
+
+        changeDinner = () => {
+          this.setState({ dinner: '牛肉麵' });
+        };
+
+        render() {
+          const { dinner } = this.state;
+
+          return (
+            <div>
+              <h2>父組件</h2>
+              <button onClick={this.changeDinner}>換晚餐</button>
+              <Son dinner={dinner} />
+            </div>
+          );
+        }
+      }
+
+      class Son extends React.Component {
+        // 第一次傳 props 進來不會觸發，之後傳進來的 props 才會
+        // 可以接收到 props
+        componentWillReceiveProps(props) {
+          console.log('componentWillReceiveProps', props);
+        }
+
+        shouldComponentUpdate() {
+          console.log('shouldComponentUpdate');
+          return true;
+        }
+
+        componentWillUpdate() {
+          console.log('componentWillUpdate');
+        }
+
+        componentDidUpdate() {
+          console.log('componentDidUpdate');
+        }
+
+        render() {
+          const { dinner } = this.props;
+
+          return (
+            <div>
+              <h2>子組件</h2>
+              <h3>今天晚餐吃: {dinner}</h3>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Dad />, document.getElementById('test'));
+    </script>
+  </body>
+</html>
